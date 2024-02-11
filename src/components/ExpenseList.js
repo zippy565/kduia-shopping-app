@@ -1,17 +1,25 @@
-import React, { useContext } from 'react';
-import { AppContext } from '../context/AppContext';
 
-const CartValue = () => {
-    const { expenses, Location } = useContext(AppContext);
-    const totalExpenses = expenses.reduce((total, item) => {
-        return (total += (item.unitprice * item.quantity));
-    }, 0);
+const ExpenseList = () => {
+    const { expenses } = useContext(AppContext);
 
     return (
-        <div className='alert alert-primary'>
-            <span>Cart Value: {Location}{totalExpenses}</span>
-        </div>
+        <table className='table'>
+              <thead className="thead-light">
+            <tr>
+              <th scope="col">Items</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Unit Price</th>
+              <th scope="col">Items Price</th>
+              <th scope="col">Remove</th>
+            </tr>
+          </thead>
+            <tbody>
+            {expenses.map((expense) => (
+                <ExpenseItem id={expense.id} key={expense.id} name={expense.name} quantity={expense.quantity} unitprice={expense.unitprice} />
+            ))}
+            </tbody>
+        </table>
     );
 };
 
-export default CartValue;
+export default ExpenseList;
